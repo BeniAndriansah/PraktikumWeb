@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Post-Test 6</title>
+</head>
+<body>
+    <div class="container">
+        <div class="table">
+    <h1>Jasa Pijat Pijat</h1>
+    <p>
+        Jasa: <span id="selectedJasa"></span>
+        <select id="jasaSelect">
+            <option value="1000000">Pijat Biasa</option>
+            <option value="2000000">Pijat+</option>
+            <option value="3000000">Pijat++</option>
+            <option value="4000000">Pijat VIP</option>
+        </select>
+    </p>
+    <p>
+        Durasi: <span id="selectedDurasi"></span>
+        <select id="durasiSelect">
+            <option value="1">60 Menit</option>
+            <option value="2">120 Menit</option>
+            <option value="3">180 Menit</option>
+        </select>
+    </p>
+    <p>
+        Voucher: 
+        <input type="text" id="voucherInput" placeholder="Masukkan Voucher Disini">
+        <button onclick="cekVoucher()">Cek Voucher</button>
+    </p>
+    <div id="feedback"></div>
+        </div>
+
+        <div class="table">
+    <div><p>Paket Pijat: <span id="selectedJasanya"></span></p></div>
+    <div><p>Durasi Pijat: <span id="selectedDurasinya"></span></p></div>
+    <div><p>Total Diskon: <span id="totalDiskonnya"></span></p></div>
+    <div><p>Total Harga: <span id="totalHarganya"></span></p></div>
+    <p>
+        <button onclick="tampilkanPilihan()">Submit</button>
+    </p>
+    </div>
+</div>
+</body>
+
+<script>
+    function cekVoucher() {
+        var voucherInput = document.getElementById('voucherInput').value;
+        var feedbackDiv = document.getElementById('feedback');
+
+        if (voucherInput.trim() === '') {
+        feedbackDiv.textContent = 'Voucher LO KOSONG WOY';
+    } else if (voucherInput === 'LEONASPRAKGANTENG') {
+        feedbackDiv.textContent = 'Voucher MASHOOK!! Diskon 20% Telah Diterapkan';
+    } else {
+        feedbackDiv.textContent = 'Voucher Kamuh KW.';
+    }
+    }
+
+    function tampilkanPilihan() {
+        var jasaSelect = document.getElementById('jasaSelect');
+        var selectedJasanya = document.getElementById('selectedJasanya');
+        var durasiSelect = document.getElementById('durasiSelect');
+        var selectedDurasinya = document.getElementById('selectedDurasinya');
+        var totalDiskonnya = document.getElementById('totalDiskonnya');
+        var totalHarganya = document.getElementById('totalHarganya');
+
+        var selectedJasaValue = jasaSelect.options[jasaSelect.selectedIndex].text;
+        var selectedDurasiValue = durasiSelect.options[durasiSelect.selectedIndex].text;
+
+        selectedJasanya.textContent = selectedJasaValue;
+        selectedDurasinya.textContent = selectedDurasiValue;
+
+        var selectedJasaPrice = parseFloat(jasaSelect.value);
+        var selectedDurasi = parseInt(durasiSelect.value);
+
+        var voucherInput = document.getElementById('voucherInput').value;
+        var diskon = 0;
+        if (voucherInput === 'LEONASPRAKGANTENG') {
+            diskon = 0.2; // 20% diskon
+        }
+
+        var totalHarga = selectedJasaPrice * selectedDurasi;
+        var totalDiskon = totalHarga * diskon;
+
+        totalDiskonnya.textContent = totalDiskon;
+        totalHarganya.textContent = (totalHarga - totalDiskon);
+    }
+</script>
+</html>
+
+
+    <!-- <!DOCTYPE html>
+    // <html>
+    //   <head>
+    //     <title>Modul 6 - JavaScript</title>
+    //   </head>
+    //   <body>
+    //     <h1>Informasi Siswa</h1>
+    
+    //     <p>Nama: <span id="nama"></span></p>
+    //     <p>Umur: <span id="umur"></span> tahun</p>
+    //     <p>Alamat: <span id="alamat"></span></p>
+    //     <p>Nilai Siswa: <span id="nilai"></span></p>
+    //     <p>Rata-rata Nilai: <span id="rata-rata"></span></p>
+    //     <p>Status Lulus: <span id="status"></span></p>
+    //   </body>
+    
+    //   <script>
+    //     let siswa = {
+    //       nama: "Leon",
+    //       umur: 10,
+    //       nilai: [85, 20, 78, 33, 88],
+    //       alamat: {
+    //         jalan: "Jl jalanin aja dulu",
+    //         kota: "Jakarta",
+    //       },
+    //       lulus: function () {
+    //         let totalNilai = 0;
+    //         for (let i = 0; i < this.nilai.length; i++) {
+    //           totalNilai += this.nilai[i];
+    //         }
+    
+    //         let rataRata = totalNilai / this.nilai.length;
+    
+    //         if (rataRata >= 70) {
+    //           return true;
+    //         } else {
+    //           return false;
+    //         }
+    //       },
+    //     };
+    
+    //     // Menampilkan informasi siswa
+    //     document.getElementById("nama").textContent = siswa.nama;
+    //     document.getElementById("umur").textContent = siswa.umur;
+    //     document.getElementById("alamat").textContent =
+    //       siswa.alamat.jalan + ", " + siswa.alamat.kota;
+    
+    //     // Menampilkan nilai siswa dan rata-ratanya
+    //     document.getElementById("nilai").textContent = siswa.nilai.join(", ");
+    //     let totalNilai = 0;
+    //     for (let i = 0; i < siswa.nilai.length; i++) {
+    //       totalNilai += siswa.nilai[i];
+    //     }
+    
+    //     let rataRata = totalNilai / siswa.nilai.length;
+    //     document.getElementById("rata-rata").textContent = rataRata;
+    
+    //     // Memeriksa apakah siswa lulus
+    //     if (siswa.lulus()) {
+    //       document.getElementById("status").textContent = "Siswa telah lulus.";
+    //     } else {
+    //       document.getElementById("status").textContent = "Siswa belum lulus.";
+    //     }
+    //   </script>
+    // </html> -->
