@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+li {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+main {
+    background-color: red;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.foto1 {
+    grid-column: 1;
+    border-radius: 20px;
+}
+
+.about {
+    grid-column: 2;
+}
