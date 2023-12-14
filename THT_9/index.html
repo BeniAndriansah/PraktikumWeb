@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <nav>
+        <h1>
+          <p>Chum Buckets</p>
+        </h1>
+        <ul>
+          <li>About Us</li>
+          <li>Contact</li>
+          <li>Promos</li>
+        </ul>
+      </nav>
+    </main>
+    <center>
+    <div class="container">
+      <div class="table">
+  <h1>Menu</h1>
+  <p>
+      Makanan: <span id="selectedMakanan"></span>
+      <select id="makanSelect">
+          <option value="1000000">Chum Goreng</option>
+          <option value="2000000">Chum Rebus</option>
+          <option value="3000000">Chum Bakar</option>
+          <option value="4000000">Chum Panggang</option>
+      </select>
+  </p>
+  <p>
+      Minuman: <span id="selectedMinuman"></span>
+      <select id="selectMinum">
+          <option value="1">Es Air Laut</option>
+          <option value="2">Es Minyak Laut</option>
+          <option value="3">Es Minyak Ikan</option>
+      </select>
+  </p>
+  <p>
+      Voucher: 
+      <input type="text" id="voucherInput" placeholder="Masukkan Voucher Disini">
+      <button onclick="cekVoucher()">Cek Voucher</button>
+  </p>
+  <div id="feedback"></div>
+      </div>
+      <div class="table">
+  <div><p>Pilihan Makanan: <span id="selectedMakanannya"></span></p></div>
+  <div><p>Pilihan Minuman: <span id="selectedMinumannya"></span></p></div>
+  <div><p>Total Diskon: <span id="totalDiskonnya"></span></p></div>
+  <div><p>Total Harga: <span id="totalHarganya"></span></p></div>
+  <p>
+      <button onclick="tampilkanPilihan()">Submit</button>
+  </p>
+  </div>
+</center>
+</div>
+    <div class="grid">
+      <img src="foto1.png" alt="" class="foto1" />
+      <div class="about">
+        <h3>About Us</h3>
+        <p>
+          Chum Bucket adalah restoran cepat saji yang terletak tepat di seberang
+          jalan dari Krusty Krab di Bikini Bottom. Restoran ini dimiliki dan
+          dikelola oleh Sheldon J. Plankton dan istrinya Karen Plankton. Chum
+          Bucket terkenal dengan makanannya yang mengerikan, yang terbuat
+          terutama dari umpan, zat berbau busuk yang digunakan untuk menarik
+          ikan. <br><br>
+          Meskipun tidak ada orang di Bikini Bottom yang benar-benar menikmati makan di Chum Bucket, Plankton menolak untuk menyerah. Dia terus-menerus membuat rencana baru untuk mencuri resep rahasia Krabby Patty dari Tuan Krabs, tetapi dia tidak pernah berhasil.
+        </p>
+      </div>
+    </div>
+    <div class="sidebar" id="sidebar"></div>
+    <section>
+      <div class="tulisan2"><h2>Contact Person:</h2></div>
+      <?php
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $email = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
+          $message = isset($_POST['message']) ? htmlspecialchars($_POST['message']) : '';
+
+          $data = "Email: $email\nMessage: $message\n\n";
+          file_put_contents('messages.txt', $data, FILE_APPEND);
+
+          echo "<div class='result'>";
+          echo "<h3>Terima kasih atas masukannya!</h3>";
+          echo "<p>Email: $email</p>";
+          echo "<p>Message: $message</p>";
+          echo "</div>";
+      }
+      ?>
+      <form action="contact.php" method="post">
+          <label for="email">Email:</label><br>
+          <input type="email" id="email" name="email" required><br><br>
+          <label for="message">Message</label><br>
+          <textarea name="message" id="message" cols="30" rows="10" required></textarea><br><br>
+          <input type="submit" value="Submit">
+      </form>
+  </section>
+  <footer>
+      TERIMAKASIH
+  </footer>
+
+  </body>
+
+  <script>
+    function cekVoucher() {
+        var voucherInput = document.getElementById('voucherInput').value;
+        var feedbackDiv = document.getElementById('feedback');
+
+        if (voucherInput.trim() === '') {
+        feedbackDiv.textContent = 'Voucher LO KOSONG WOY';
+    } else if (voucherInput === 'LEONASPRAKGANTENG') {
+        feedbackDiv.textContent = 'Voucher MASHOOK!! Diskon 20% Telah Diterapkan';
+    } else {
+        feedbackDiv.textContent = 'Voucher Kamuh KW.';
+    }
+    }
+
+    function tampilkanPilihan() {
+        var makanSelect = document.getElementById('makanSelect');
+        var selectedMakanannya = document.getElementById('selectedMakanannya');
+        var selectMinum = document.getElementById('selectMinum');
+        var selectedMinumannya = document.getElementById('selectedMinumannya');
+        var totalDiskonnya = document.getElementById('totalDiskonnya');
+        var totalHarganya = document.getElementById('totalHarganya');
+
+        var selectedMakananValue = makanSelect.options[makanSelect.selectedIndex].text;
+        var selectedMinumanValue = selectMinum.options[selectMinum.selectedIndex].text;
+
+        selectedMakanannya.textContent = selectedMakananValue;
+        selectedMinumannya.textContent = selectedMinumanValue;
+
+        var selectedMakananPrice = parseFloat(makanSelect.value);
+        var selectedMinuman = parseInt(selectMinum.value);
+
+        var voucherInput = document.getElementById('voucherInput').value;
+        var diskon = 0;
+        if (voucherInput === 'LEONASPRAKGANTENG') {
+            diskon = 0.2; // 20% diskon
+        }
+
+        var totalHarga = selectedMakananPrice * selectedMinuman;
+        var totalDiskon = totalHarga * diskon;
+
+        totalDiskonnya.textContent = totalDiskon;
+        totalHarganya.textContent = (totalHarga - totalDiskon);
+    }
+    function createSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        var buttonData = [
+          { name: 'Button 1', action: 'buttonAction1' },
+          { name: 'Button 2', action: 'buttonAction2' },
+        ];
+        buttonData.forEach(function (buttonInfo) {
+          var button = document.createElement('button');
+          button.textContent = buttonInfo.name;
+          button.onclick = function () {
+            window[buttonInfo.action]();
+          };
+          sidebar.appendChild(button);
+        });
+      }
+
+      function buttonAction1() {
+        alert('kamu menemukan easter egg pada website ini WOW');
+      }
+
+      function buttonAction2() {
+        alert('wah easter egg kedua LHOOO');
+      }
+      window.onload = createSidebar;
+</script>
+</html>
